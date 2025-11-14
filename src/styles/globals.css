@@ -35,17 +35,6 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.2) black;
   }
-
-  /* Custom cursor - only for Hero section */
-  .custom-cursor-active {
-    cursor: none;
-  }
-
-  .custom-cursor-active a,
-  .custom-cursor-active button,
-  .custom-cursor-active [role="button"] {
-    cursor: pointer !important;
-  }
 }
 
 @layer utilities {

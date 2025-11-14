@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiMail, HiPhone } from 'react-icons/hi'
@@ -7,14 +7,6 @@ import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
   const [currentIntro, setCurrentIntro] = useState(0)
-  const [showCursor, setShowCursor] = useState(false)
-  
-  // Custom cursor
-  const cursorX = useMotionValue(-100)
-  const cursorY = useMotionValue(-100)
-  const springConfig = { damping: 25, stiffness: 700 }
-  const cursorXSpring = useSpring(cursorX, springConfig)
-  const cursorYSpring = useSpring(cursorY, springConfig)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,58 +15,12 @@ const Hero = () => {
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16)
-      cursorY.set(e.clientY - 16)
-    }
-
-    const heroSection = document.getElementById('hero')
-    if (!heroSection) return
-
-    const handleMouseEnter = () => {
-      setShowCursor(true)
-      document.body.classList.add('custom-cursor-active')
-    }
-
-    const handleMouseLeave = () => {
-      setShowCursor(false)
-      document.body.classList.remove('custom-cursor-active')
-    }
-
-    heroSection.addEventListener('mouseenter', handleMouseEnter)
-    heroSection.addEventListener('mouseleave', handleMouseLeave)
-    window.addEventListener('mousemove', moveCursor)
-
-    return () => {
-      heroSection.removeEventListener('mouseenter', handleMouseEnter)
-      heroSection.removeEventListener('mouseleave', handleMouseLeave)
-      window.removeEventListener('mousemove', moveCursor)
-      setShowCursor(false)
-      document.body.classList.remove('custom-cursor-active')
-    }
-  }, [cursorX, cursorY])
-
   // Split name for animation
   const firstName = personalInfo.name.split(' ')[0]
   const lastName = personalInfo.name.split(' ')[1]
 
   return (
-    <>
-      {/* Custom Cursor - Only visible in Hero section */}
-      {showCursor && (
-        <motion.div
-          className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-50 mix-blend-difference"
-          style={{
-            x: cursorXSpring,
-            y: cursorYSpring,
-          }}
-        >
-          <div className="w-full h-full rounded-full bg-white"></div>
-        </motion.div>
-      )}
-
-      <section id="hero" className="relative h-screen flex items-center overflow-hidden bg-black pt-20">
+    <section id="hero" className="relative h-screen flex items-center overflow-hidden bg-black pt-20">
         {/* Subtle Grid Background */}
         <div className="absolute inset-0 opacity-10">
           <div 
@@ -350,7 +296,6 @@ const Hero = () => {
           </div>
         </div>
       </section>
-    </>
   )
 }
 
