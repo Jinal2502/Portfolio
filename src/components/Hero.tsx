@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
@@ -6,19 +5,6 @@ import { HiMail, HiPhone } from 'react-icons/hi'
 import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
-  const [currentIntro, setCurrentIntro] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIntro((prev) => (prev + 1) % personalInfo.intro.length)
-    }, 3500)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Split name for animation
-  const firstName = personalInfo.name.split(' ')[0]
-  const lastName = personalInfo.name.split(' ')[1]
-
   return (
     <section id="hero" className="relative h-screen flex items-center overflow-hidden bg-black pt-20">
         {/* Subtle Grid Background */}
@@ -94,14 +80,15 @@ const Hero = () => {
                 </div>
 
                 {/* Sub-headline */}
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed max-w-3xl"
                 >
-                  {personalInfo.heroText.subheadline}
-                </motion.p>
+                  <p>Full-stack development that transforms your ideas</p>
+                  <p>into production-ready platforms</p>
+                </motion.div>
 
                 {/* Name & Title */}
                 <motion.div
@@ -114,20 +101,6 @@ const Hero = () => {
                     {personalInfo.name} • {personalInfo.title}
                   </p>
                 </motion.div>
-
-                {/* Rotating Intro Text */}
-                <motion.div
-                  key={currentIntro}
-                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -15, scale: 0.95 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  className="h-12 md:h-14 flex items-center justify-start pt-2"
-                >
-                  <p className="text-sm md:text-base lg:text-lg text-white/60 font-light italic max-w-2xl">
-                    "{personalInfo.intro[currentIntro]}"
-                  </p>
-                </motion.div>
               </motion.div>
 
               {/* CTA Buttons */}
@@ -135,10 +108,10 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className="flex flex-wrap items-center gap-4 pt-2"
+                className="flex flex-wrap items-center gap-4 pt-4"
               >
                 <Link
-                  to="projects"
+                  to="contact"
                   spy={true}
                   smooth={true}
                   offset={-64}
@@ -153,7 +126,7 @@ const Hero = () => {
                     whileTap={{ scale: 0.95 }}
                     className="relative px-10 py-4 bg-white text-black font-semibold text-sm tracking-widest uppercase overflow-hidden group"
                   >
-                    <span className="relative z-10">View Work</span>
+                    <span className="relative z-10">Get In Touch</span>
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-white via-gray-100 to-white"
                       initial={{ x: '-100%' }}
@@ -163,7 +136,7 @@ const Hero = () => {
                   </motion.button>
                 </Link>
                 <Link
-                  to="contact"
+                  to="projects"
                   spy={true}
                   smooth={true}
                   offset={-64}
@@ -179,7 +152,7 @@ const Hero = () => {
                     whileTap={{ scale: 0.95 }}
                     className="px-10 py-4 glass text-white font-semibold text-sm tracking-widest uppercase border-2 border-white/20 transition-all duration-300"
                   >
-                    Get In Touch
+                    View Work
                   </motion.button>
                 </Link>
               </motion.div>
@@ -228,21 +201,8 @@ const Hero = () => {
               </motion.div>
             </div>
 
-            {/* Right Column - Visual Element (Optional) */}
+            {/* Right Column - Empty for balance */}
             <div className="lg:col-span-4 hidden lg:block">
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="relative h-full flex items-center justify-end"
-              >
-                <div className="w-full max-w-xs space-y-4">
-                  <div className="glass rounded-none p-6 border border-white/10">
-                    <div className="text-white/40 text-xs font-light tracking-wider uppercase mb-2">Status</div>
-                    <div className="text-white text-lg font-light">{personalInfo.availability.status}</div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
           </div>
         </div>
