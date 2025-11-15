@@ -44,8 +44,8 @@ const Navbar = () => {
               to="hero"
               spy={true}
               smooth={true}
-              offset={-80}
-              duration={800}
+              offset={-64}
+              duration={500}
               className="text-xl font-bold text-white cursor-pointer tracking-tight"
             >
               JR
@@ -65,8 +65,8 @@ const Navbar = () => {
                   to={item.to}
                   spy={true}
                   smooth={true}
-                  offset={-80}
-                  duration={800}
+                  offset={-64}
+                  duration={500}
                   className="text-white/60 hover:text-white transition-colors cursor-pointer text-xs font-light tracking-[0.15em] uppercase relative group"
                   activeClass="text-white"
                 >
@@ -105,8 +105,8 @@ const Navbar = () => {
                 to={item.to}
                 spy={true}
                 smooth={true}
-                offset={-80}
-                duration={800}
+                offset={-64}
+                duration={500}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block text-white/60 hover:text-white transition-colors cursor-pointer text-sm font-light tracking-[0.15em] uppercase py-2"
                 activeClass="text-white"

@@ -12,8 +12,14 @@ export const personalInfo = {
     "Turning complex problems into elegant solutions.",
     "Code that doesn't just work—it performs.",
   ],
+  availability: {
+    status: "2 Slots Available for Next Month",
+    isAvailable: true
+  },
   heroText: {
     greeting: "Hey there, I'm",
+    headline: "I Build Powerful Web Solutions That Scale",
+    subheadline: "Full-stack development that transforms your ideas into production-ready platforms",
     subtitle: "I build things for the web",
     description: "Full Stack Developer & Tech Founder of GUIDOPIA—an edtech platform serving real users.",
     tagline: "Turning ideas into digital reality"
@@ -71,17 +77,54 @@ export const skills = {
 };
 
 export const pricing = {
-  fullStackPlatform: {
-    price: "₹75,000",
-    description: "Complete Full Stack Platform",
-    features: [
-      "Full-stack development",
-      "Database design & implementation",
-      "Authentication & authorization",
-      "API development",
-      "Frontend & backend integration",
-      "Deployment & hosting setup"
-    ]
-  },
-  note: "For other projects, reach out to discuss your requirements"
+  tiers: [
+    {
+      id: "basic",
+      name: "Basic",
+      price: "$400",
+      description: "Frontend OR Backend Development",
+      features: [
+        "Single-stack development (choose one)",
+        "Responsive design implementation",
+        "Modern framework setup",
+        "Clean, maintainable code",
+        "Basic deployment support",
+        "2 weeks delivery"
+      ],
+      popular: false
+    },
+    {
+      id: "essential",
+      name: "Essential",
+      price: "$800",
+      description: "Frontend & Backend Development",
+      features: [
+        "Complete full-stack development",
+        "Database design & implementation",
+        "RESTful API development",
+        "Authentication & authorization",
+        "Frontend & backend integration",
+        "Deployment & hosting setup",
+        "4 weeks delivery"
+      ],
+      popular: true
+    },
+    {
+      id: "elite",
+      name: "Elite",
+      price: "$1000+",
+      description: "Design & Development",
+      features: [
+        "Everything in Essential",
+        "Custom UI/UX design",
+        "Brand identity elements",
+        "Advanced animations & interactions",
+        "Performance optimization",
+        "Ongoing support & maintenance",
+        "6+ weeks delivery"
+      ],
+      popular: false
+    }
+  ],
+  note: "Custom projects available. Let's discuss your specific requirements."
 };

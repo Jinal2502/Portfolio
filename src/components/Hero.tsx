@@ -64,93 +64,56 @@ const Hero = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Left Column - Name & Main Content */}
-            <div className="lg:col-span-8 space-y-8">
+            <div className="lg:col-span-8 space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="space-y-6"
+                className="space-y-4"
               >
+                {/* FOMO Availability Status */}
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.5 }}
-                  className="text-white/60 text-xs md:text-sm font-light tracking-[0.3em] uppercase"
+                  className="text-white/60 text-sm font-light tracking-wider uppercase"
                 >
-                  {personalInfo.heroText.greeting}
+                  {personalInfo.availability.status}
                 </motion.p>
 
-                {/* Animated Name */}
+                {/* Service-Focused Headline */}
                 <div className="relative">
                   <motion.h1
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.8 }}
-                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white"
                   >
-                    {/* First Name */}
-                    <div className="flex items-center justify-start gap-1 md:gap-2">
-                      {firstName.split('').map((letter, index) => (
-                        <motion.span
-                          key={`first-${index}`}
-                          initial={{ opacity: 0, y: 30, rotateX: -90 }}
-                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                          transition={{
-                            delay: 0.3 + index * 0.03,
-                            duration: 0.5,
-                            type: 'spring',
-                            stiffness: 200,
-                            damping: 15
-                          }}
-                          whileHover={{
-                            scale: 1.15,
-                            y: -8,
-                            transition: { duration: 0.2 }
-                          }}
-                          className="inline-block text-gradient cursor-default"
-                        >
-                          {letter === ' ' ? '\u00A0' : letter}
-                        </motion.span>
-                      ))}
-                    </div>
-                    
-                    {/* Last Name */}
-                    <div className="flex items-center justify-start gap-1 md:gap-2 mt-1">
-                      {lastName.split('').map((letter, index) => (
-                        <motion.span
-                          key={`last-${index}`}
-                          initial={{ opacity: 0, y: 30, rotateX: -90 }}
-                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                          transition={{
-                            delay: 0.6 + index * 0.03,
-                            duration: 0.5,
-                            type: 'spring',
-                            stiffness: 200,
-                            damping: 15
-                          }}
-                          whileHover={{
-                            scale: 1.15,
-                            y: -8,
-                            transition: { duration: 0.2 }
-                          }}
-                          className="inline-block text-white cursor-default"
-                        >
-                          {letter === ' ' ? '\u00A0' : letter}
-                        </motion.span>
-                      ))}
-                    </div>
+                    {personalInfo.heroText.headline}
                   </motion.h1>
                 </div>
 
-                {/* Subtitle */}
+                {/* Sub-headline */}
                 <motion.p
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                  className="text-lg md:text-xl lg:text-2xl text-white/80 font-light tracking-wide"
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed max-w-3xl"
                 >
-                  {personalInfo.heroText.subtitle}
+                  {personalInfo.heroText.subheadline}
                 </motion.p>
+
+                {/* Name & Title */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="pt-2"
+                >
+                  <p className="text-white/50 text-sm font-light">
+                    {personalInfo.name} • {personalInfo.title}
+                  </p>
+                </motion.div>
 
                 {/* Rotating Intro Text */}
                 <motion.div
@@ -159,22 +122,10 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -15, scale: 0.95 }}
                   transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  className="h-14 md:h-16 flex items-center justify-start"
+                  className="h-12 md:h-14 flex items-center justify-start pt-2"
                 >
-                  <p className="text-base md:text-lg lg:text-xl text-white/70 font-light italic max-w-2xl">
+                  <p className="text-sm md:text-base lg:text-lg text-white/60 font-light italic max-w-2xl">
                     "{personalInfo.intro[currentIntro]}"
-                  </p>
-                </motion.div>
-
-                {/* Description */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                  className="space-y-2 max-w-2xl"
-                >
-                  <p className="text-white/70 text-sm md:text-base font-light leading-relaxed">
-                    {personalInfo.heroText.description}
                   </p>
                 </motion.div>
               </motion.div>
@@ -183,15 +134,15 @@ const Hero = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4, duration: 0.5 }}
-                className="flex flex-wrap items-center gap-4 -mt-2"
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="flex flex-wrap items-center gap-4 pt-2"
               >
                 <Link
                   to="projects"
                   spy={true}
                   smooth={true}
-                  offset={-80}
-                  duration={800}
+                  offset={-64}
+                  duration={500}
                 >
                   <motion.button
                     whileHover={{ 
@@ -215,8 +166,8 @@ const Hero = () => {
                   to="contact"
                   spy={true}
                   smooth={true}
-                  offset={-80}
-                  duration={800}
+                  offset={-64}
+                  duration={500}
                 >
                   <motion.button
                     whileHover={{ 
@@ -237,7 +188,7 @@ const Hero = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
+                transition={{ delay: 1.0, duration: 0.5 }}
                 className="flex items-center gap-6 pt-2"
               >
                 {[
@@ -255,7 +206,7 @@ const Hero = () => {
                       rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 1.8 + index * 0.1, type: 'spring', stiffness: 200 }}
+                      transition={{ delay: 1.2 + index * 0.1, type: 'spring', stiffness: 200 }}
                       whileHover={{ 
                         scale: 1.4, 
                         y: -5,
@@ -282,13 +233,13 @@ const Hero = () => {
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
                 className="relative h-full flex items-center justify-end"
               >
                 <div className="w-full max-w-xs space-y-4">
                   <div className="glass rounded-none p-6 border border-white/10">
                     <div className="text-white/40 text-xs font-light tracking-wider uppercase mb-2">Status</div>
-                    <div className="text-white text-lg font-light">Available for projects</div>
+                    <div className="text-white text-lg font-light">{personalInfo.availability.status}</div>
                   </div>
                 </div>
               </motion.div>
