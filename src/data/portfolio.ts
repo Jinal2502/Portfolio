@@ -125,7 +125,6 @@ export const pricing = {
         "Brand identity & design system",
         "Advanced animations & micro-interactions",
         "Performance optimization & SEO",
-        "3 months post-launch support",
         "Priority support & maintenance",
         "8-10 weeks delivery",
         "Dedicated project manager",

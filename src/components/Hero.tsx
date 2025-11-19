@@ -183,7 +183,7 @@ const Hero = () => {
               >
                 <MagneticButton>
                   <Link
-                    to="projects"
+                    to="contact"
                     spy={true}
                     smooth={true}
                     offset={-64}
@@ -198,7 +198,7 @@ const Hero = () => {
                       whileTap={{ scale: 0.95 }}
                       className="relative px-10 py-4 bg-white text-black font-semibold text-sm tracking-widest uppercase overflow-hidden group"
                     >
-                      <span className="relative z-10">View Work</span>
+                      <span className="relative z-10">Get In Touch</span>
                       <motion.div
                         className="absolute inset-0 bg-gradient-to-r from-white via-gray-100 to-white"
                         initial={{ x: '-100%' }}
@@ -210,7 +210,7 @@ const Hero = () => {
                 </MagneticButton>
                 <MagneticButton>
                   <Link
-                    to="contact"
+                    to="projects"
                     spy={true}
                     smooth={true}
                     offset={-64}
@@ -226,7 +226,7 @@ const Hero = () => {
                       whileTap={{ scale: 0.95 }}
                       className="px-10 py-4 glass text-white font-semibold text-sm tracking-widest uppercase border-2 border-white/20 transition-all duration-300"
                     >
-                      Get In Touch
+                      View Work
                     </motion.button>
                   </Link>
                 </MagneticButton>
