@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useState, useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiMail, HiPhone } from 'react-icons/hi'
 import { personalInfo } from '../data/portfolio'
+import MagneticButton from './ui/MagneticButton'
+import TextReveal from './ui/TextReveal'
 
 const Hero = () => {
   const [currentIntro, setCurrentIntro] = useState(0)
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -15,8 +25,13 @@ const Hero = () => {
     return () => clearInterval(interval)
   }, [])
 
+
   return (
-    <section id="hero" className="relative h-screen flex items-center overflow-hidden bg-black pt-20">
+    <section 
+      ref={heroRef}
+      id="hero" 
+      className="relative h-screen flex items-center overflow-hidden bg-black pt-20"
+    >
         {/* Subtle Grid Background */}
         <div className="absolute inset-0 opacity-10">
           <div 
@@ -28,13 +43,15 @@ const Hero = () => {
           />
         </div>
 
-        {/* Animated Gradient Orbs */}
+        {/* Animated Gradient Orbs - Enhanced */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/5 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+          style={{ y }}
           animate={{
             x: [0, 100, 0],
             y: [0, 50, 0],
-            scale: [1, 1.2, 1],
+            scale: [1, 1.3, 1],
+            rotate: [0, 180, 360],
           }}
           transition={{
             duration: 20,
@@ -43,14 +60,29 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-white/5 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+          style={{ y }}
           animate={{
             x: [0, -100, 0],
             y: [0, -50, 0],
-            scale: [1, 1.2, 1],
+            scale: [1, 1.3, 1],
+            rotate: [360, 180, 0],
           }}
           transition={{
             duration: 25,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/3 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+          style={{ y, opacity }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 15,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
@@ -68,36 +100,52 @@ const Hero = () => {
                 className="space-y-4"
               >
                 {/* FOMO Availability Status */}
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                  className="text-white/60 text-sm font-light tracking-wider uppercase"
-                >
-                  {personalInfo.availability.status}
-                </motion.p>
+                <TextReveal delay={0.1}>
+                  <motion.p
+                    className="text-white/60 text-sm font-light tracking-wider uppercase"
+                    whileHover={{ scale: 1.05, x: 5 }}
+                  >
+                    {personalInfo.availability.status}
+                  </motion.p>
+                </TextReveal>
 
-                {/* Service-Focused Headline */}
-                <div className="relative">
+                {/* Service-Focused Headline - Split Text Animation */}
+                <div className="relative overflow-hidden">
                   <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white"
                   >
-                    {personalInfo.heroText.headline}
+                    {personalInfo.heroText.headline.split(' ').map((word, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0, y: 50, rotateX: -90 }}
+                        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                        transition={{
+                          delay: 0.2 + i * 0.1,
+                          duration: 0.6,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="inline-block mr-2"
+                        whileHover={{ scale: 1.1, y: -5 }}
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
                   </motion.h1>
                 </div>
 
                 {/* Sub-headline */}
-                <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed max-w-3xl"
-                >
-                  {personalInfo.heroText.subheadline}
-                </motion.p>
+                <TextReveal delay={0.4}>
+                  <motion.p
+                    className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed max-w-3xl"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    {personalInfo.heroText.subheadline}
+                  </motion.p>
+                </TextReveal>
 
                 {/* Name & Title */}
                 <motion.div
@@ -126,58 +174,62 @@ const Hero = () => {
                 </motion.div>
               </motion.div>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons - Magnetic Effect */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
                 className="flex flex-wrap items-center gap-4 -mt-2"
               >
-                <Link
-                  to="projects"
-                  spy={true}
-                  smooth={true}
-                  offset={-64}
-                  duration={500}
-                >
-                  <motion.button
-                    whileHover={{ 
-                      scale: 1.05, 
-                      y: -2,
-                      boxShadow: "0 8px 30px rgba(255, 255, 255, 0.2)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="relative px-10 py-4 bg-white text-black font-semibold text-sm tracking-widest uppercase overflow-hidden group"
+                <MagneticButton>
+                  <Link
+                    to="projects"
+                    spy={true}
+                    smooth={true}
+                    offset={-64}
+                    duration={500}
                   >
-                    <span className="relative z-10">View Work</span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-white via-gray-100 to-white"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.6 }}
-                    />
-                  </motion.button>
-                </Link>
-                <Link
-                  to="contact"
-                  spy={true}
-                  smooth={true}
-                  offset={-64}
-                  duration={500}
-                >
-                  <motion.button
-                    whileHover={{ 
-                      scale: 1.05, 
-                      y: -2,
-                      borderColor: 'rgba(255, 255, 255, 0.4)',
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-10 py-4 glass text-white font-semibold text-sm tracking-widest uppercase border-2 border-white/20 transition-all duration-300"
+                    <motion.button
+                      whileHover={{ 
+                        scale: 1.05, 
+                        y: -2,
+                        boxShadow: "0 8px 30px rgba(255, 255, 255, 0.2)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative px-10 py-4 bg-white text-black font-semibold text-sm tracking-widest uppercase overflow-hidden group"
+                    >
+                      <span className="relative z-10">View Work</span>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-white via-gray-100 to-white"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: '100%' }}
+                        transition={{ duration: 0.6 }}
+                      />
+                    </motion.button>
+                  </Link>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link
+                    to="contact"
+                    spy={true}
+                    smooth={true}
+                    offset={-64}
+                    duration={500}
                   >
-                    Get In Touch
-                  </motion.button>
-                </Link>
+                    <motion.button
+                      whileHover={{ 
+                        scale: 1.05, 
+                        y: -2,
+                        borderColor: 'rgba(255, 255, 255, 0.4)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-10 py-4 glass text-white font-semibold text-sm tracking-widest uppercase border-2 border-white/20 transition-all duration-300"
+                    >
+                      Get In Touch
+                    </motion.button>
+                  </Link>
+                </MagneticButton>
               </motion.div>
 
               {/* Social Links */}

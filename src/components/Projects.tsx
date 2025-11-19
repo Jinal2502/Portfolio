@@ -3,6 +3,8 @@ import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { projects } from '../data/portfolio'
 import { FiExternalLink, FiX, FiArrowRight } from 'react-icons/fi'
+import MagneticButton from './ui/MagneticButton'
+import TextReveal from './ui/TextReveal'
 
 const Projects = () => {
   const ref = useRef(null)
@@ -30,19 +32,37 @@ const Projects = () => {
           className="space-y-24"
         >
           {/* Section Header - Left Aligned */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            className="max-w-3xl"
-          >
-            <h2 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
-              <span className="text-white">Work</span>
-            </h2>
-            <div className="w-32 h-px bg-white/20 mb-8"></div>
-            <p className="text-white/60 text-lg font-light">
-              Building real-world solutions that make a difference
-            </p>
-          </motion.div>
+          <TextReveal>
+            <div className="max-w-3xl">
+              <motion.h2 
+                className="text-6xl md:text-8xl font-bold mb-6 tracking-tight"
+                initial={{ opacity: 0, x: -100 }}
+                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.span 
+                  className="text-white inline-block"
+                  whileHover={{ scale: 1.1, x: 10 }}
+                >
+                  Work
+                </motion.span>
+              </motion.h2>
+              <motion.div 
+                className="w-32 h-px bg-white/20 mb-8"
+                initial={{ scaleX: 0 }}
+                animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              />
+              <motion.p 
+                className="text-white/60 text-lg font-light"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ delay: 0.4 }}
+              >
+                Building real-world solutions that make a difference
+              </motion.p>
+            </div>
+          </TextReveal>
 
           {/* Project - Slick Design */}
           {projects.map((project, index) => (
@@ -54,20 +74,22 @@ const Projects = () => {
               className="group"
             >
               <div className="grid lg:grid-cols-12 gap-8 items-center">
-                {/* Image - Left */}
+                {/* Image - Left - Enhanced with 3D Effect */}
                 <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="lg:col-span-7 relative overflow-hidden border border-white/10 group-hover:border-white/30 transition-all"
+                  initial={{ opacity: 0, x: -50, rotateY: -15 }}
+                  animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : { opacity: 0, x: -50, rotateY: -15 }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ scale: 1.02, rotateY: 5 }}
+                  className="lg:col-span-7 relative overflow-hidden border border-white/10 group-hover:border-white/30 transition-all perspective-1000"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
                   {project.image ? (
                     <motion.img
                       src={project.image}
                       alt={project.name}
                       className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.6 }}
+                      whileHover={{ scale: 1.1, rotate: 2 }}
+                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement
                         target.style.display = 'none'
@@ -75,15 +97,30 @@ const Projects = () => {
                     />
                   ) : (
                     <div className="w-full h-96 bg-white/5 flex items-center justify-center">
-                      <div className="text-6xl font-bold text-white/10">{project.name[0]}</div>
+                      <motion.div 
+                        className="text-6xl font-bold text-white/10"
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                      >
+                        {project.name[0]}
+                      </motion.div>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                  <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                    initial={{ y: 100 }}
+                    whileHover={{ y: 0 }}
+                  />
+                  <motion.div 
+                    className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                    initial={{ x: -20, opacity: 0 }}
+                    whileHover={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
                     <div className="flex items-center gap-2 text-white text-sm font-light tracking-wider uppercase">
-                      View Project <FiArrowRight />
+                      View Project <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}><FiArrowRight /></motion.span>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
 
                 {/* Content - Right */}
@@ -125,26 +162,40 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  {/* Actions */}
+                  {/* Actions - Magnetic Buttons */}
                   <div className="flex items-center gap-6 pt-4 relative z-10">
                     {project.link !== '#' && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold text-sm tracking-wider uppercase hover:bg-white/90 transition-all cursor-pointer"
-                      >
-                        <FiExternalLink />
-                        View Live
-                      </a>
+                      <MagneticButton>
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold text-sm tracking-wider uppercase hover:bg-white/90 transition-all cursor-pointer"
+                        >
+                          <motion.span
+                            whileHover={{ rotate: [0, -15, 15, -15, 0] }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            <FiExternalLink />
+                          </motion.span>
+                          View Live
+                        </a>
+                      </MagneticButton>
                     )}
-                    <button
-                      onClick={() => setSelectedProject(project.id)}
-                      className="flex items-center gap-2 px-6 py-3 text-white border border-white/20 font-light text-sm tracking-wider uppercase hover:border-white/40 hover:bg-white/5 transition-all cursor-pointer"
-                    >
-                      View Details
-                      <FiArrowRight />
-                    </button>
+                    <MagneticButton>
+                      <button
+                        onClick={() => setSelectedProject(project.id)}
+                        className="flex items-center gap-2 px-6 py-3 text-white border border-white/20 font-light text-sm tracking-wider uppercase hover:border-white/40 hover:bg-white/5 transition-all cursor-pointer"
+                      >
+                        View Details
+                        <motion.span
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          <FiArrowRight />
+                        </motion.span>
+                      </button>
+                    </MagneticButton>
                   </div>
                 </motion.div>
               </div>

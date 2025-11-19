@@ -68,16 +68,29 @@ const About = () => {
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    className="glass rounded-none p-6 border border-white/10 hover:border-white/30 transition-all group"
+                    initial={{ opacity: 0, y: 30, rotateX: -15 }}
+                    animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 30, rotateX: -15 }}
+                    transition={{ delay: 0.5 + index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ scale: 1.05, y: -8, rotateY: 5, rotateX: 5 }}
+                    className="glass rounded-none p-6 border border-white/10 hover:border-white/30 transition-all group perspective-1000"
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <Icon className={`${stat.color} text-2xl group-hover:scale-110 transition-transform`} />
+                      <motion.div
+                        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Icon className={`${stat.color} text-2xl group-hover:scale-110 transition-transform`} />
+                      </motion.div>
                       <div className="text-right">
-                        <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                        <motion.div 
+                          className="text-3xl font-bold text-white mb-1"
+                          initial={{ scale: 0 }}
+                          animate={isInView ? { scale: 1 } : { scale: 0 }}
+                          transition={{ delay: 0.6 + index * 0.1, type: 'spring', stiffness: 200 }}
+                        >
+                          {stat.value}
+                        </motion.div>
                         <div className="text-white/50 text-xs font-light tracking-wider uppercase">
                           {stat.label}
                         </div>
