@@ -83,6 +83,7 @@ export const pricing = {
       name: "Basic",
       price: "$400",
       description: "Frontend OR Backend Development",
+      subDescription: "Perfect for Indian clients",
       features: [
         "Single-stack development (choose one)",
         "Responsive design implementation",
@@ -91,13 +92,15 @@ export const pricing = {
         "Basic deployment support",
         "2 weeks delivery"
       ],
-      popular: false
+      popular: false,
+      region: "IN"
     },
     {
       id: "essential",
       name: "Essential",
       price: "$800",
       description: "Frontend & Backend Development",
+      subDescription: "Perfect for Indian clients",
       features: [
         "Complete full-stack development",
         "Database design & implementation",
@@ -107,24 +110,31 @@ export const pricing = {
         "Deployment & hosting setup",
         "4 weeks delivery"
       ],
-      popular: true
+      popular: true,
+      region: "IN"
     },
     {
       id: "elite",
       name: "Elite",
-      price: "$1000+",
-      description: "Design & Development",
+      price: "$3000",
+      description: "Design + Frontend + Backend",
+      subDescription: "Complete solution - Premium tier",
       features: [
-        "Everything in Essential",
-        "Custom UI/UX design",
-        "Brand identity elements",
-        "Advanced animations & interactions",
-        "Performance optimization",
-        "Ongoing support & maintenance",
-        "6+ weeks delivery"
+        "Everything in Essential tier",
+        "Custom UI/UX design (Figma/Adobe XD)",
+        "Brand identity & design system",
+        "Advanced animations & micro-interactions",
+        "Performance optimization & SEO",
+        "3 months post-launch support",
+        "Priority support & maintenance",
+        "8-10 weeks delivery",
+        "Dedicated project manager",
+        "Weekly progress updates"
       ],
-      popular: false
+      popular: false,
+      premium: true,
+      value: "3x the value of Essential"
     }
   ],
-  note: "Custom projects available. Let's discuss your specific requirements."
+  note: "All prices in USD. Custom projects available. Let's discuss your specific requirements."
 };
